@@ -6,13 +6,18 @@ import platform
 osName = platform.system()
 
 
-#Grabbing minutes/hours till shutdown
-sleepMinutes = input("In wie vielen Minuten soll der PC herunterfahren?: ")
-sleepHours = input("In wie vielen Stunden soll der PC herunterfahren?: ")
+#Grabbing minutes/hours till shutdown and printing
+sleepMinutes = input("In how many minutes do you want the PC to shutdown?: ")
+sleepHours = input("In how many hours do you want the PC to shutdown?: ")
 
-#timeTillShutdown = sleepHours * 60 * 60 + sleepMinutes * 60
-
-#print("Der PC fährt in " + str(sleepMinutes) + " Minuten und " + str(sleepHours) + " Stunden herunter.")
+print("The PC will shutdown in " + str(sleepMinutes) + " minutes and " + str(sleepHours) + " hours.")
 
 
-#subprocess.run(["shutdown", sleepMinutes])
+#Passing shutdown command to terminal. Will differ if it's Unix or Windows OS
+if osName == "Windows":
+    timeToSeconds = sleepMinutes * 60 + sleepHours * 60 * 60
+    subprocess.run(["shutdown", "/s", "/t", timeToSeconds])
+    #idea: adding Time and Date here at which time it will shutdown
+    #idea: maybe add wait command, so that the popup window wont show up
+else:
+    subprocess.run(["shutdown", sleepMinutes])
